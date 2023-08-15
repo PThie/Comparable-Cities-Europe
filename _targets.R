@@ -123,6 +123,13 @@ target_grid_pop <- rlang::list2(
             grid_pop,
             city_shapes
         )
+    ),
+    # Aggregate city population on city-level
+    tar_fst_tbl(
+        city_pop,
+        aggregate_city_pop(
+            city_grid_pop
+        )
     )
 )
 
@@ -154,5 +161,5 @@ target_gdp <- rlang::list2(
 rlang::list2(
     target_prep_geo,
     target_grid_pop,
-    target_gdp
+    #target_gdp
 )
