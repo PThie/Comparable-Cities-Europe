@@ -29,7 +29,7 @@ make_city_shapes <- function(utmcrs) {
     for (city in cities) {
         # extract city name
         base_length <- nchar(file.path(data_path, "cities"))
-        city_name <- substr(city, start = base_length+2, stop = nchar(city)-4)
+        city_name <- substr(city, start = base_length + 2, stop = nchar(city) - 4)
 
         # read data
         dta <- st_read(
@@ -42,7 +42,7 @@ make_city_shapes <- function(utmcrs) {
             name = NULL,
             name_en = NULL
         ) |>
-        st_cast("MULTIPOLYGON")
+        st_cast("POLYGON")
 
         # store data
         city_shapes_list[[city_name]] <- dta
