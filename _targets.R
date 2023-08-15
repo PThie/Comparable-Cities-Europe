@@ -121,7 +121,7 @@ target_grid_pop <- rlang::list2(
         city_grid_pop,
         make_city_pop(
             grid_pop,
-            city_shapes
+            city_grids
         )
     ),
     # Aggregate city population on city-level
