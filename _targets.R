@@ -156,10 +156,34 @@ target_gdp <- rlang::list2(
 )
 
 #----------------------------------------------
+# point data
+# including education, public transportation, and tourism
+
+target_point <- rlang::list2(
+    tar_fst_tbl(
+        education,
+        make_education(
+            city_shapes,
+            city_pop,
+            utmcrs
+        )
+    )
+)
+
+#----------------------------------------------
+# line data
+# including railroads, and streets
+
+#----------------------------------------------
+# polygon data
+# including greenspace, and waterbodies
+
+#----------------------------------------------
 # all together
 
 rlang::list2(
     target_prep_geo,
     target_grid_pop,
-    #target_gdp
+    target_gdp,
+    target_point
 )
