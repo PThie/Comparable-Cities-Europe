@@ -40,7 +40,11 @@ make_city_shapes <- function(utmcrs) {
         dplyr::mutate(
             city_name = city_name,
             name = NULL,
-            name_en = NULL
+            name_en = NULL,
+            # add the size of the city
+            city_size_sqkm = as.numeric(
+                sf::st_area(geometry)
+            ) / 1000000
         ) |>
         sf::st_cast("MULTIPOLYGON")
 
@@ -56,21 +60,24 @@ make_city_shapes <- function(utmcrs) {
     # determining longitude and latitude
 
     # calculate centroid of each city
-    cents <- sf::st_centroid(all_cities)
+    cents <- suppressWarnings(
+        sf::st_centroid(all_cities)
+    )
 
     # transform to WGS (GPS)
     cents <- sf::st_transform(cents, 4326)
 
     # extract coordinates
     cents_coords <- cents |>
-        st_drop_geometry() |>
+        dplyr::select(-city_size_sqkm) |>
         dplyr::mutate(
             longitude = as.character(sf::st_coordinates(cents)[, 1]),
             latitude = as.character(sf::st_coordinates(cents)[, 2]),
             # remove everything after do to keep only broad long and lat
             longitude = stringr::str_replace(longitude, "\\..*", ""),
             latitude = stringr::str_replace(latitude, "\\..*", "")
-        )
+        ) |>
+        sf::st_drop_geometry()
 
     # merge back to city shapes
     all_cities <- all_cities |>
