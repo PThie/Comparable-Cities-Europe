@@ -72,7 +72,12 @@ make_education <- function(city_shapes, city_pop, utmcrs) {
     # define colors
     # randomly selecting a set of colors
     cols <- MetBrewer::met.brewer(name = "Redon", n = 12)
-    cols <- sample(cols, 5, replace = FALSE)
+    set.seed(12345)
+    cols <- sample(
+        cols,
+        length(unique(education$used_tag)),
+        replace = FALSE
+    )
 
     # define labels
     labs <- stringr::str_to_title(unique(education$used_tag))
@@ -82,7 +87,8 @@ make_education <- function(city_shapes, city_pop, utmcrs) {
         # generate map
         map <- ggplot()+
             geom_sf(
-                data = education |> dplyr::filter(year == 2020 & city_name == ct),
+                data = education |>
+                    dplyr::filter(year == 2020 & city_name == ct),
                 mapping = aes(
                     geometry = geometry,
                     col = used_tag
@@ -90,14 +96,15 @@ make_education <- function(city_shapes, city_pop, utmcrs) {
                 size = 1.5
             )+
             geom_sf(
-                data = city_shapes |> dplyr::filter(city_name == ct),
+                data = city_shapes |>
+                    dplyr::filter(city_name == ct),
                 mapping = aes(geometry = geometry),
                 fill = NA,
                 linewidth = 0.8,
                 col = "black"
             )+
             scale_color_manual(
-                name = "",
+                name = "Feature type",
                 values = cols,
                 labels = labs 
             )+
