@@ -32,17 +32,17 @@ make_city_shapes <- function(utmcrs) {
         city_name <- substr(city, start = base_length + 2, stop = nchar(city) - 4)
 
         # read data
-        dta <- st_read(
+        dta <- sf::st_read(
             city,
             quiet = TRUE
         ) |>
-        st_transform(utmcrs) |>
-        mutate(
+        sf::st_transform(utmcrs) |>
+        dplyr::mutate(
             city_name = city_name,
             name = NULL,
             name_en = NULL
         ) |>
-        st_cast("POLYGON")
+        sf::st_cast("MULTIPOLYGON")
 
         # store data
         city_shapes_list[[city_name]] <- dta
@@ -50,7 +50,34 @@ make_city_shapes <- function(utmcrs) {
 
     # combine all and set geometry
     all_cities <- data.table::rbindlist(city_shapes_list)
-    all_cities <- st_set_geometry(all_cities, all_cities$geometry)
+    all_cities <- sf::st_set_geometry(all_cities, all_cities$geometry)
+
+    #----------------------------------------------
+    # determining longitude and latitude
+
+    # calculate centroid of each city
+    cents <- sf::st_centroid(all_cities)
+
+    # transform to WGS (GPS)
+    cents <- sf::st_transform(cents, 4326)
+
+    # extract coordinates
+    cents_coords <- cents |>
+        st_drop_geometry() |>
+        dplyr::mutate(
+            longitude = as.character(sf::st_coordinates(cents)[, 1]),
+            latitude = as.character(sf::st_coordinates(cents)[, 2]),
+            # remove everything after do to keep only broad long and lat
+            longitude = stringr::str_replace(longitude, "\\..*", ""),
+            latitude = stringr::str_replace(latitude, "\\..*", "")
+        )
+
+    # merge back to city shapes
+    all_cities <- all_cities |>
+        merge(
+            cents_coords,
+            by = "city_name"
+        )
 
     #----------------------------------------------
     # export
