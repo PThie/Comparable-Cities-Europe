@@ -160,9 +160,28 @@ target_gdp <- rlang::list2(
 # including education, public transportation, and tourism
 
 target_point <- rlang::list2(
+    # Prepare and plot education opportunities
     tar_fst_tbl(
         education,
         make_education(
+            city_shapes,
+            city_pop,
+            utmcrs
+        )
+    ),
+    # Prepare and plot public transportation points
+    tar_fst_tbl(
+        transport,
+        make_public_transport(
+            city_shapes,
+            city_pop,
+            utmcrs
+        )
+    ),
+    # Prepare and plot tourism spots
+    tar_fst_tbl(
+        tourism,
+        make_tourism(
             city_shapes,
             city_pop,
             utmcrs
@@ -174,9 +193,39 @@ target_point <- rlang::list2(
 # line data
 # including railroads, and streets
 
+target_line <- rlang::list2(
+    # Prepare and plot street network
+    tar_fst_tbl(
+        streets,
+        make_streets(
+            city_shapes,
+            utmcrs
+        )
+    ),
+    # Prepare and plot railroad network
+    tar_fst_tbl(
+        railroads,
+        make_railroads(
+            city_shapes,
+            utmcrs
+        )
+    )
+)
+
 #----------------------------------------------
 # polygon data
 # including greenspace, and waterbodies
+
+target_polygon <- rlang::list2(
+
+)
+
+#----------------------------------------------
+# combine all information on the city-level
+
+target_combine_cities <- rlang::list2(
+
+)
 
 #----------------------------------------------
 # all together
@@ -185,5 +234,8 @@ rlang::list2(
     target_prep_geo,
     target_grid_pop,
     target_gdp,
-    target_point
+    target_point,
+    target_line,
+    # target_polygon,
+    # target_combine_cities
 )
