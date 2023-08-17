@@ -4,3 +4,4 @@ renv
 .Rprofile
 _targets/meta
 -targets/meta/meta
+_targets/
