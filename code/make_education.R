@@ -1,5 +1,5 @@
 make_education <- function(city_shapes, city_pop, utmcrs) {
-    #' @title Making education
+    #' @title Preparing education
     #' 
     #' @description This function aggregates the education buildings on the
     #' city-level by year. It also plots the raw data. Year for plotting: 2020
