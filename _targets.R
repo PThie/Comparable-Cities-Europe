@@ -217,7 +217,22 @@ target_line <- rlang::list2(
 # including greenspace, and waterbodies
 
 target_polygon <- rlang::list2(
-
+    # Prepare and plot waterbodies
+    tar_fst_tbl(
+        waterbodies,
+        make_waterbodies(
+            city_shapes,
+            utmcrs
+        )
+    ),
+    # Prepare and plot greenspace
+    tar_fst_tbl(
+        greenspace,
+        make_greenspace(
+            city_shapes,
+            utmcrs
+        )
+    )
 )
 
 #----------------------------------------------
@@ -236,6 +251,6 @@ rlang::list2(
     target_gdp,
     target_point,
     target_line,
-    # target_polygon,
+    target_polygon,
     # target_combine_cities
 )
