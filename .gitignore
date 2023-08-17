@@ -2,3 +2,5 @@ data
 output
 renv
 .Rprofile
+_targets/meta
+-targets/meta/meta
