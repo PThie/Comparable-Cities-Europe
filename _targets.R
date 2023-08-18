@@ -239,7 +239,21 @@ target_polygon <- rlang::list2(
 # combine all information on the city-level
 
 target_combine_cities <- rlang::list2(
-
+    tar_fst_tbl(
+        city_candidates,
+        combine_all_resources(
+            city_pop,
+            city_shapes,
+            aggregated_city_gdp,
+            education,
+            transport,
+            tourism,
+            streets,
+            railroads,
+            waterbodies,
+            greenspace
+        )
+    )
 )
 
 #----------------------------------------------
@@ -252,5 +266,5 @@ rlang::list2(
     target_point,
     target_line,
     target_polygon,
-    # target_combine_cities
+    target_combine_cities
 )
