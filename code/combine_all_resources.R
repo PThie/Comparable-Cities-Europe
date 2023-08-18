@@ -1,6 +1,6 @@
 combine_all_resources <- function(
     city_pop,
-    city_shapes
+    city_shapes,
     aggregated_city_gdp,
     education,
     transport,
@@ -10,9 +10,12 @@ combine_all_resources <- function(
     waterbodies,
     greenspace
 ) {
-    #' @title
+    #' @title Combining all information
     #' 
-    #' @description
+    #' @description This function takes all the prepared information at the
+    #' city-level and combines it in one table. It also compares each city
+    #' with each other to find candidates of cities that match in key 
+    #' characteristics.
     #' 
     #' @param city_pop Population at city-level
     #' @param city_shapes Borders of the cities
@@ -26,7 +29,7 @@ combine_all_resources <- function(
     #' @param greenspace Area of greenspace at city-level
     #' 
     #' @author Patrick Thiel
-    #' @return
+    #' @return DataFrame with city information and candidates
     
     #----------------------------------------------
     # merge all information
@@ -237,4 +240,94 @@ combine_all_resources <- function(
             by = "city_name"
         )
 
+    # define columns names of candidates
+    cols <- candidates_table |>
+        dplyr::select(-city_name) |>
+        names()
+
+    # create new column where all the candidates are pasted together
+    candidates_table$all_candidates <- apply(
+        # only keep variables of interest (i.e. candidates columns)
+        candidates_table |>
+            dplyr::select(cols),
+        1,
+        paste,
+        collapse = ", "
+    )
+
+    # loop through all cities to combine candidates information in one single
+    # column
+    candidates_list <- apply(
+        candidates_table,
+        1,
+        FUN = function(row_data) {
+            # separate candidates list by coma
+            cities <- stringr::str_split_1(row_data["all_candidates"], ",")
+            #print(cities)
+
+            # remove white space
+            cities <- stringr::str_trim(cities)
+
+            # count the city candidates
+            counts <- as.data.frame(
+                table(cities)
+            )
+
+            # remove count of own city (i.e. avoid matching city to itself)
+            # keep only cities with maximum frequencies, i.e. highest match
+            counts <- counts |>
+                dplyr::filter(cities != unique(row_data["city_name"])) |>
+                dplyr::filter(Freq == max(Freq))
+
+            # construct output dataframe
+            output <- as.data.frame(
+                cbind(
+                    city_name = row_data["city_name"],
+                    candidates = paste(unique(counts$cities), collapse = ", "),
+                    candidates_counts =unique(counts$Freq)
+                )
+            ) |>
+            # replace no match information
+            dplyr::mutate(
+                candidates = dplyr::case_when(
+                    candidates == "NA" ~ "no match",
+                    TRUE ~ candidates
+                ),
+                candidates_counts = as.numeric(candidates_counts),
+                candidates_counts = dplyr::case_when(
+                    candidates == "no match" ~ 0,
+                    TRUE ~ candidates_counts
+                )
+            )
+        }
+    )
+
+    # combine information into dataframe
+    candidates <- data.table::rbindlist(candidates_list)
+
+    #----------------------------------------------
+    # combine original data table with comparison findings
+
+    all_data <- all_data |>
+        merge(
+            candidates,
+            by = "city_name",
+            all.x = TRUE
+        )
+
+    #----------------------------------------------
+    # export
+
+    data.table::fwrite(
+        all_data,
+        file.path(
+            data_path,
+            "comparison/cities_and_candidates.csv"
+        ),
+        na = "NA"
+    )
+
+    #----------------------------------------------
+    # return
+    return(all_data)
 }
