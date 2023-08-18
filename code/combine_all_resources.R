@@ -56,7 +56,7 @@ combine_all_resources <- function(
                 # keep only values of 2020
                 dplyr::filter(year == 2020) |>
                 # keep only total count
-                dplyr::select(city_name, total_count_educ) |>
+                dplyr::select(city_name, total_educ_per_tsd_pp) |>
                 # keep only one value per city
                 dplyr::distinct(),
             by = "city_name",
