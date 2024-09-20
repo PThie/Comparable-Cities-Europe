@@ -5,3 +5,4 @@ renv
 _targets/meta
 -targets/meta/meta
 _targets/
+.Rhistory
