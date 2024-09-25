@@ -146,6 +146,174 @@ In addition to the matching threshold, we also constrain the algorithm to exclud
 
 ## Final Result (An Example)
 
+We would select the matching city/cities based on the majority rule, i.e., the highest number of similar characteristics. Munich (Germany) matches with two cities, Prague (Czech Republic) and Augsburg (Germany), in five out of ten measures (marked in bold). In a next step, the matched cities (control sites) could be grouped into a synthetic control group, which would be (potentially) even closer to Munich (Germany) than the individual cities.
+
+<div role="region" tabindex="0">
+<table style="border-bottom:2px solid;border-top:2px solid">
+    <caption>
+        <p>Table 2: Matching outcome for Munich (Germany)</p>
+    </caption>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Munich</th>
+            <th>Prague</th>
+            <th>Augsburg</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <p>Population size</p>
+            </td>
+            <td>
+                <div>&nbsp;1,517,793&nbsp;</div>
+            </td>
+            <td>
+                <div>&nbsp;<b>1,316,551</b>&nbsp;</div>
+            </td>
+            <td>
+                <div>&nbsp;333,059&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>City size (km<sup>2</sup>)</p>
+            </td>
+            <td>
+                <div>310.7</div>
+            </td>
+            <td>
+                <div>497.7</div>
+            </td>
+            <td>
+                <div>146.8</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Relative local GDP</p>
+            </td>
+            <td>
+                <div>106.5</div>
+            </td>
+            <td>
+                <div>135.9</div>
+            </td>
+            <td>
+                <div><b>102.5</b></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Relative number of education opportunities (per Tsd. people)</p>
+            </td>
+            <td>
+                <div>0.9</div>
+            </td>
+            <td>
+                <div>0.7</div>
+            </td>
+            <td>
+                <div><b>0.8</b></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Relative number of access points to public transport (per Tsd. people)</p>
+            </td>
+            <td>
+                <div>2.1</div>
+            </td>
+            <td>
+                <div>2.8</div>
+            </td>
+            <td>
+                <div><b>2.0</b></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Relative number of tourist attractions (per Tsd. people)</div>
+            </td>
+            <td>
+                <div>0.3</div>
+            </td>
+            <td>
+                <div><b>0.3</b></div>
+            </td>
+            <td>
+                <div><b>0.3</b></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Relative length of the street network</div>
+            </td>
+            <td>
+                <div>2.8</div>
+            </td>
+            <td>
+                <div><b>2.6</b></div>
+            </td>
+            <td>
+                <div>1.6</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Relative length of the railroad network</div>
+            </td>
+            <td>
+                <div>4.2</div>
+            </td>
+            <td>
+                <div>2.4</div>
+            </td>
+            <td>
+                <div>2.2</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Relative area covered by water bodies (km<sup>2</sup>)</div>
+            </td>
+            <td>
+                <div>2.4</div>
+            </td>
+            <td>
+                <div><b>2.8</b></div>
+            </td>
+            <td>
+                <div><b>2.3</b></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Relative area covered by green space (km2)</div>
+            </td>
+            <td>
+                <div>36.4</div>
+            </td>
+            <td>
+                <div><b>37.7</b></div>
+            </td>
+            <td>
+                <div>1.8</div>
+            </td>
+        </tr>
+        <tr style="border-top:2px solid;">
+            <td>
+                <div>Number of total matches</div>
+            </td>
+            <td></td>
+            <td>5</td>
+            <td>5</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
 ## Sources
 
 - European Environmental Agency (EEA) (2017). France Administrative Boundaries. [Data set]. [Accessed: July 2023].
