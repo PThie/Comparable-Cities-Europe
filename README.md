@@ -324,8 +324,7 @@ We would select the matching city/cities based on the majority rule, i.e., the h
 
 - Kummu, M., Taka, M., & Guillaume (2018). Data Descriptor: Gridded Global Datasets for Gross Domestic Product and Human Development Index over 1990–2015. [Data set].
 
-- OSM Data for 2020.
-
+- OSM Data for 2020, including streets, greenspace, public transportation, railroads, tourism, waterbodies, education facilities.
 
 ## Disclaimer
 This repository and the corresponding output have been part of the project: Activation of NATURE-based solutions for a JUST low carbon transition funded by European Commission, Horizon 2020. All rights reserved the author of the code [Dr. Patrick Thiel](https://www.rwi-essen.de/rwi/team/person/patrick-thiel).
